@@ -54,21 +54,51 @@ class MyHomePage extends StatelessWidget {
 
     // Tracks changes in the app state using the watch method.
     var appState = context.watch<MyAppState>();
+    var pair = appState.current;
 
     // Every build method must return a widget or a nested tree of widgets.
     return Scaffold(
       // Column is a basic layout widget in Flutter. It takes any number of children and puts them in a column from top to bottom
-      body: Column(children: [
-        Text("A random word:"),
-        // Takes appState, and accesses the only member of that class, current word pair
-        Text(appState.current.asLowerCase),
-        ElevatedButton(
-          onPressed: () {
-            appState.getNext();
-          },
-          child: Text('Next'),
-        )
-      ]),
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          // Takes appState, and accesses the only member of that class, current word pair
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              appState.getNext();
+            },
+            child: Text('Next'),
+          )
+        ]),
+      ),
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    // By using theme.textTheme, you access the app's font theme
+    var style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(pair.asLowerCase,
+            style: style, semanticsLabel: pair.asPascalCase),
+      ),
     );
   }
 }
