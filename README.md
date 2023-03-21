@@ -1,3 +1,5 @@
-# name_generator
+# Name Generator
 
-A new Flutter project.
+Tutorial application for Flutter that randomly generates names.
+
+Tutorial: https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0
